@@ -1,0 +1,18 @@
+﻿<Page
+    x:Class="ST_Test01.Views.ImageView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ST_Test01"
+    xmlns:localViewModels="using:ST_Test01.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    DataContext="{StaticResource ImageViewModel}">
+
+    <Grid Background="Green">
+        <Button Command="{Binding ImageAction}" Margin="133,149,0,459" Width="100">
+            <TextBlock> Action </TextBlock>
+        </Button>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="133,256,0,0" VerticalAlignment="Top" Width="100" Source="{Binding ImageSource}"/>
+    </Grid>
+</Page>

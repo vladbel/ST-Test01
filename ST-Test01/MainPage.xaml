@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid Background="Gray">
+        <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="133,256,0,0" VerticalAlignment="Top" Width="100" Source="https://smartthings-plus.s3.amazonaws.com/category-icons/garden-icon%402x.png"/>
     </Grid>
 </Page>

@@ -3,6 +3,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ST_Test01"
+    xmlns:localViewModels="using:ST_Test01.ViewModels"
     RequestedTheme="Light">
+
+    <Application.Resources>
+        <localViewModels:ImageViewModel x:Key="ImageViewModel" />
+    </Application.Resources>
 
 </Application>
