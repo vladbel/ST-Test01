@@ -34,7 +34,6 @@
         </Border>
 
         <Border Grid.Row="3" Background="#AAFFAA">
-
             <Image  x:Name="Image03" Height="100" Width="100" Source="{Binding ImageSource03}"/>
         </Border>
 

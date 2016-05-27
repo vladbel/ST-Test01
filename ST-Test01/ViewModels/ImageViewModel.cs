@@ -25,7 +25,9 @@ namespace ST_Test01.ViewModels
 
         public ImageViewModel()
         {
-            //ImageSource = "https://smartthings-plus.s3.amazonaws.com/category-icons/music-icon%402x.png";
+            ImageSource03 = "C://Users//Vladimir//Documents//666.png";
+
+            //ImageSource01 = new BitmapImage(new Uri("C://Users//Vladimir//Documents//666.png"));
 
             ImageAction = new RelayCommand(
                 async () => 
@@ -72,8 +74,8 @@ namespace ST_Test01.ViewModels
             }
         }
 
-        private ImageSource _imageSource03;
-        public ImageSource ImageSource03
+        private string _imageSource03;
+        public string ImageSource03
         {
             get
             {
@@ -109,7 +111,7 @@ namespace ST_Test01.ViewModels
             await pixelStream.ReadAsync(pixels, 0, pixels.Length);
 
             encoder.SetPixelData(BitmapPixelFormat.Bgra8,
-                                 BitmapAlphaMode.Ignore,
+                                 BitmapAlphaMode.Straight,
                                  (uint)writeableBitmap.PixelWidth,
                                  (uint)writeableBitmap.PixelHeight,
                                  96.0,
@@ -118,6 +120,9 @@ namespace ST_Test01.ViewModels
             await encoder.FlushAsync();
 
             stream.Dispose();
+
+            var fileUri = new Uri(savefile.Path);
+            ImageSource03 = fileUri.AbsoluteUri;
         }
 
         private async Task ImageActionAsync()
@@ -170,32 +175,6 @@ namespace ST_Test01.ViewModels
                 await renderer.RenderAsync();
                 output.Invalidate();
             }
-        }
-
-        //private static async Task<ImageSource> ColorizeImageInternalAsync01(IImageProvider inputImage)
-        //{
-
-        //    // Build the blurry image entirely in memory on the GPU so that
-        //    // we can unwind (dispose) the effect graph prior to returning.
-        //    IBuffer buffer = null;
-        //    using (var colorizationEffect = new ColorizationEffect(inputImage, new Windows.UI.Color() { R = 0, G = 0, B = 100 }, 1.0, 1.0)) // Create effect with the source stream
-        //    using (var renderer = new JpegRenderer(colorizationEffect)) // Render to a Jpeg first to get the result image in memory
-        //    {
-        //        buffer = await renderer.RenderAsync();
-        //    }
-
-        //    return await MakeBitmapImage(buffer);
-        //}
-
-        private static async Task<BitmapImage> MakeBitmapImage(IBuffer buffer)
-        {
-            var result = new BitmapImage();
-            if (buffer != null)
-            {
-                await result.SetSourceAsync(buffer.AsStream().AsRandomAccessStream());
-            }
-
-            return result;
         }
     }
 }
