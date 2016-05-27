@@ -96,19 +96,28 @@ namespace ST_Test01.ViewModels
             var writeableBitmap = (WriteableBitmap)ImageSource02;
 
             FileSavePicker picker = new FileSavePicker();
-            picker.FileTypeChoices.Add("JPG File", new List<string>() { ".jpg" });
+            picker.FileTypeChoices.Add("PNG File", new List<string>() { ".png" });
             StorageFile savefile = await picker.PickSaveFileAsync();
             if (savefile == null)
                 return;
             IRandomAccessStream stream = await savefile.OpenAsync(FileAccessMode.ReadWrite);
-            BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
+            BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId,
+                                                                                stream);
             // Get pixels of the WriteableBitmap object 
             Stream pixelStream = writeableBitmap.PixelBuffer.AsStream();
             byte[] pixels = new byte[pixelStream.Length];
             await pixelStream.ReadAsync(pixels, 0, pixels.Length);
-            // Save the image file with jpg extension 
-            encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)writeableBitmap.PixelWidth, (uint)writeableBitmap.PixelHeight, 96.0, 96.0, pixels);
+
+            encoder.SetPixelData(BitmapPixelFormat.Bgra8,
+                                 BitmapAlphaMode.Ignore,
+                                 (uint)writeableBitmap.PixelWidth,
+                                 (uint)writeableBitmap.PixelHeight,
+                                 96.0,
+                                 96.0,
+                                 pixels);
             await encoder.FlushAsync();
+
+            stream.Dispose();
         }
 
         private async Task ImageActionAsync()
