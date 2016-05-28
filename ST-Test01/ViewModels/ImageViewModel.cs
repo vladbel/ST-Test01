@@ -33,7 +33,7 @@ namespace ST_Test01.ViewModels
                 async () => 
                 {
                     await ImageActionAsync();
-                }
+                }C:\Users\Vladimir\Source\Repos\ST-Test01\ST-Test01\MainPage.xaml
             );
 
             SaveAction  = new RelayCommand(
@@ -97,9 +97,10 @@ namespace ST_Test01.ViewModels
         {
             var writeableBitmap = (WriteableBitmap)ImageSource02;
 
-            FileSavePicker picker = new FileSavePicker();
-            picker.FileTypeChoices.Add("PNG File", new List<string>() { ".png" });
-            StorageFile savefile = await picker.PickSaveFileAsync();
+            var storageService = new StorageManagerService();
+
+
+            StorageFile savefile = await storageService.CreateFileAsync(new Guid().ToString(), ".png");
             if (savefile == null)
                 return;
             IRandomAccessStream stream = await savefile.OpenAsync(FileAccessMode.ReadWrite);
@@ -121,7 +122,7 @@ namespace ST_Test01.ViewModels
 
             stream.Dispose();
 
-            var fileUri = new Uri(savefile.Path);
+            var fileUri = storageService.GetUriFromFile(savefile);
             ImageSource03 = fileUri.AbsoluteUri;
         }
 
@@ -169,7 +170,7 @@ namespace ST_Test01.ViewModels
 
         private async Task ColorizeImageInternalAsync(/*Lumia.Imaging.*/IImageProvider inputImage, WriteableBitmap output)
         {
-            using (var colorizationEffect = new ColorizationEffect(inputImage, new Windows.UI.Color() { R = 0, G = 0, B = 100 }, 1.0, 1.0)) // Create effect with the source stream
+            using (var colorizationEffect = new ColorizationEffect(inputImage, new Windows.UI.Color() { R = 255, G = 0, B = 255 }, 1.0, 1.0)) // Create effect with the source stream
             using (var renderer = new WriteableBitmapRenderer(colorizationEffect, output))
             {
                 await renderer.RenderAsync();
