@@ -33,7 +33,7 @@ namespace ST_Test01.ViewModels
                 async () => 
                 {
                     await ImageActionAsync();
-                }C:\Users\Vladimir\Source\Repos\ST-Test01\ST-Test01\MainPage.xaml
+                }
             );
 
             SaveAction  = new RelayCommand(
