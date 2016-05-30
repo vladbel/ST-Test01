@@ -99,6 +99,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\HttpProxyService.cs" />
+    <Compile Include="Services\StorageManagerService.cs" />
+    <Compile Include="Services\StorageServiceBase.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ImageViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />

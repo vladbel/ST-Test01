@@ -9,10 +9,36 @@
     mc:Ignorable="d"
     DataContext="{StaticResource ImageViewModel}">
 
-    <Grid Background="Green">
-        <Button Command="{Binding ImageAction}" Margin="133,149,0,459" Width="100">
+    <Grid Background="LightGreen">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+        
+        <Button Grid.Row="0" Command="{Binding ImageAction}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock> Action </TextBlock>
         </Button>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="100" Margin="133,256,0,0" VerticalAlignment="Top" Width="100" Source="{Binding ImageSource}"/>
+
+        <Button Grid.Row="0" Command="{Binding SaveAction}" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <TextBlock> save</TextBlock>
+        </Button>
+
+        <Border Grid.Row="1" Background="#AAFFAA">
+            <Image  x:Name="Image01" Height="100" Width="100" Source="{Binding ImageSource01}"/>
+        </Border>
+
+        <Border Grid.Row="2">
+            <Image  x:Name="Image02" Height="100" Width="100" Source="{Binding ImageSource02}"/>
+        </Border>
+
+        <Border Grid.Row="3" Background="#AAFFAA">
+            <Image  x:Name="Image03" Height="100" Width="100" Source="{Binding ImageSource03}"/>
+        </Border>
+
+
+
+
     </Grid>
 </Page>
