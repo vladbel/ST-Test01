@@ -25,9 +25,6 @@ namespace ST_Test01.ViewModels
 
         public ImageViewModel()
         {
-            ImageSource03 = "C://Users//Vladimir//Documents//666.png";
-
-            //ImageSource01 = new BitmapImage(new Uri("C://Users//Vladimir//Documents//666.png"));
 
             ImageAction = new RelayCommand(
                 async () => 
@@ -162,7 +159,8 @@ namespace ST_Test01.ViewModels
             var bufferImageSource = new /*Lumia.Imaging.*/BufferImageSource(inputBuffer);
 
 
-            var output = new /*Windows.UI.Xaml.Media.Imaging.*/WriteableBitmap(120, 120); // size?
+            var output = new /*Windows.UI.Xaml.Media.Imaging.*/WriteableBitmap((int)bufferImageSource.ImageSize.Width,
+                                                                               (int)bufferImageSource.ImageSize.Height);
             await ColorizeImageInternalAsync(bufferImageSource, output);
 
             return output;
