@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 namespace ST_Test01.ViewModels
 {
 
+    /// <summary>
+    /// from
+    /// https://msdn.microsoft.com/en-us/magazine/dn605875.aspx
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
     public sealed class NotifyTaskCompletion<TResult> : INotifyPropertyChanged
     {
         public NotifyTaskCompletion(Task<TResult> task)
