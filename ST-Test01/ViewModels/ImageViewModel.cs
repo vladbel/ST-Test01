@@ -48,7 +48,7 @@ namespace ST_Test01.ViewModels
                 }
              );
 
-            ImageSource03 = "ms-appdata:///temp/images/4bf7efd093c6676777592c2ede9461b6.png";
+            //ImageSource03 = "ms-appdata:///temp/images/4bf7efd093c6676777592c2ede9461b6.png";
         }
 
         private ImageSource _imageSource01;
@@ -216,9 +216,7 @@ namespace ST_Test01.ViewModels
 
             var localUri = await imageColorizationService.ApplyColorizationFilterAndSaveAsync("https://smartthings-plus.s3.amazonaws.com/category-icons/garden-icon%402x.png");
 
-            return "ms-appdata:///temp/images/4bf7efd093c6676777592c2ede9461b6.png";
-
-            //return localUri.AbsoluteUri;
+            return localUri.AbsoluteUri;
         }
         #endregion
 

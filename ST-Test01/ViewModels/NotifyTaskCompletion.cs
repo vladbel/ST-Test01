@@ -44,13 +44,13 @@ namespace ST_Test01.ViewModels
                 propertyChanged(this, new PropertyChangedEventArgs("IsFaulted"));
                 propertyChanged(this, new PropertyChangedEventArgs("Exception"));
                 propertyChanged(this,
-                  new PropertyChangedEventArgs("InnerException"));
+                                new PropertyChangedEventArgs("InnerException"));
                 propertyChanged(this, new PropertyChangedEventArgs("ErrorMessage"));
             }
             else
             {
                 propertyChanged(this,
-                  new PropertyChangedEventArgs("IsSuccessfullyCompleted"));
+                                new PropertyChangedEventArgs("IsSuccessfullyCompleted"));
                 propertyChanged(this, new PropertyChangedEventArgs("Result"));
             }
         }
@@ -60,7 +60,9 @@ namespace ST_Test01.ViewModels
             get
             {
                 var result =  (Task.Status == TaskStatus.RanToCompletion) ?
-                                       Task.Result : default(TResult);
+                                                Task.Result : default(TResult);
+
+                GC.Collect();
                 return result;
             }
         }
@@ -94,6 +96,7 @@ namespace ST_Test01.ViewModels
                 null : InnerException.Message;
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

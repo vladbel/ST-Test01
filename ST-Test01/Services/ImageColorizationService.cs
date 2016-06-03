@@ -40,13 +40,14 @@ namespace ST_Test01.Services
             bufferImageSource.Dispose();
 
             var localUri = await SaveImageAsync(output, externalUri);
+
             return localUri;
         }
 
         private async Task<Uri> SaveImageAsync(WriteableBitmap writableBitmap, string key)
         {
 
-            var uri =  await _fileStorageService.CreateFileAsync(key, "png");
+            //var uri =  await _fileStorageService.CreateFileAsync(key, "png");
 
             var storageFile = (StorageFile)await _fileStorageService.GetFileObjectAsync(key);
 
@@ -70,7 +71,7 @@ namespace ST_Test01.Services
             stream.Dispose();
             pixelStream.Dispose();
 
-            return _fileStorageService.GetUriFromFile(uri);
+            return _fileStorageService.GetUriFromFile(storageFile);
         }
 
         private async Task ColorizeImageInternalAsync(/*Lumia.Imaging.*/IImageProvider inputImage, WriteableBitmap output)
