@@ -7,7 +7,7 @@ using Windows.Storage;
 
 namespace ST_Test01.Services
 {
-    internal class StorageManagerService : BaseStorageService
+    public  class StorageManagerService : BaseStorageService
     {
         private const string IMAGES_FOLDER_NAME = "images";
         private const string FILE_PREFIX = "ms-appdata:///temp/";
@@ -71,6 +71,12 @@ namespace ST_Test01.Services
         public Uri GetUriFromFile(IStorageItem file)
         {
             return new Uri(FILE_PREFIX + FolderName + "/" + file.Name);
+        }
+
+        public async Task<object> GetFileObjectAsync(string uri)
+        {
+            var file = await base.GetFileAsync(uri);
+            return file;
         }
     }
 }

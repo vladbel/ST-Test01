@@ -5,7 +5,7 @@ using Windows.Storage;
 
 namespace ST_Test01.Services
 {
-    internal abstract class BaseStorageService
+    public abstract class BaseStorageService
     {
         protected abstract StorageFolder Folder { get; }
 

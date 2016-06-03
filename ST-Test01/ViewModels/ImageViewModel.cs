@@ -33,12 +33,22 @@ namespace ST_Test01.ViewModels
                 }
             );
 
-            SaveAction  = new RelayCommand(
+            SaveAction = new RelayCommand(
                 async () =>
                 {
                     await SaveImageAsync();
                 }
-);
+            );
+            LaunchAsyncProp = new RelayCommand(
+                () =>
+                {
+                    ImageSource04 = new NotifyTaskCompletion<string>(DownloadAdnApplyFilterAndSave());
+                    //ImageSource04.PropertyChanged += ( sender, e) => { OnPropertyChanged("ImageSource04." + e.PropertyName); } ;
+
+                }
+             );
+
+            ImageSource03 = "ms-appdata:///temp/images/4bf7efd093c6676777592c2ede9461b6.png";
         }
 
         private ImageSource _imageSource01;
@@ -86,6 +96,8 @@ namespace ST_Test01.ViewModels
             }
         }
 
+
+
         public ICommand ImageAction { get; set; }
 
         public ICommand SaveAction { get; set; }
@@ -97,7 +109,7 @@ namespace ST_Test01.ViewModels
             var storageService = new StorageManagerService();
 
 
-            StorageFile savefile = await storageService.CreateFileAsync(new Guid().ToString(), ".png");
+            StorageFile savefile = await storageService.CreateFileAsync(Guid.NewGuid().ToString(), "png");
             if (savefile == null)
                 return;
             IRandomAccessStream stream = await savefile.OpenAsync(FileAccessMode.ReadWrite);
@@ -175,5 +187,41 @@ namespace ST_Test01.ViewModels
                 output.Invalidate();
             }
         }
+
+        #region "Async property"
+
+        public ICommand LaunchAsyncProp { get; set; }
+
+        private NotifyTaskCompletion<string> _imageSource04;
+        public NotifyTaskCompletion<string> ImageSource04
+        {
+            get
+            {
+                return _imageSource04;
+            }
+
+            set
+            {
+                _imageSource04 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private async Task<string> DownloadAdnApplyFilterAndSave()
+        {
+            IHttpProxyService httpProxyService = new HttpProxyService();
+            var storageService = new StorageManagerService();
+
+            var imageColorizationService = new ImageColorizationService(storageService, httpProxyService);
+
+            var localUri = await imageColorizationService.ApplyColorizationFilterAndSaveAsync("https://smartthings-plus.s3.amazonaws.com/category-icons/garden-icon%402x.png");
+
+            return "ms-appdata:///temp/images/4bf7efd093c6676777592c2ede9461b6.png";
+
+            //return localUri.AbsoluteUri;
+        }
+        #endregion
+
+
     }
 }

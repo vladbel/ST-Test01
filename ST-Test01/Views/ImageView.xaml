@@ -15,6 +15,7 @@
             <RowDefinition Height="100" />
             <RowDefinition Height="100" />
             <RowDefinition Height="100" />
+            <RowDefinition Height="100" />
         </Grid.RowDefinitions>
         
         <Button Grid.Row="0" Command="{Binding ImageAction}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -23,6 +24,10 @@
 
         <Button Grid.Row="0" Command="{Binding SaveAction}" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right">
             <TextBlock> save</TextBlock>
+        </Button>
+
+        <Button Grid.Row="0" Command="{Binding LaunchAsyncProp}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <TextBlock>Async Prop</TextBlock>
         </Button>
 
         <Border Grid.Row="1" Background="#AAFFAA">
@@ -35,6 +40,10 @@
 
         <Border Grid.Row="3" Background="#AAFFAA">
             <Image  x:Name="Image03" Height="100" Width="100" Source="{Binding ImageSource03}"/>
+        </Border>
+        
+        <Border Grid.Row="4">
+            <Image  x:Name="Image04" Height="100" Width="100" Source="{Binding ImageSource04.Result}"/>
         </Border>
 
 
