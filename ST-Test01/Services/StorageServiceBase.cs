@@ -21,6 +21,10 @@ namespace ST_Test01.Services
             var files = await folder.GetFilesAsync();
             var filename = GetSafeFileName(key);
             var file = files.FirstOrDefault(f => f.Name.StartsWith(filename));
+            if (file == null)
+            {
+                file = await CreateFileAsync(filename, "png");
+            }
             return file;
         }
 

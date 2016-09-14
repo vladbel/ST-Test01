@@ -9,6 +9,16 @@
     mc:Ignorable="d"
     DataContext="{StaticResource ImageViewModel}">
 
+    <Page.Resources>
+        <Style x:Key="ButtonText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style x:Key="LightBackground" TargetType="Border">
+            <Setter Property="Background" Value="#AAFFAA" />
+        </Style>
+    </Page.Resources>
+
     <Grid Background="LightGreen">
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
@@ -17,37 +27,70 @@
             <RowDefinition Height="100" />
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
-        
-        <Button Grid.Row="0" Command="{Binding ImageAction}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock> Action </TextBlock>
-        </Button>
 
-        <Button Grid.Row="0" Command="{Binding SaveAction}" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-            <TextBlock> save</TextBlock>
-        </Button>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.33*" />
+                <ColumnDefinition Width="0.33*" />
+                <ColumnDefinition Width="0.33*" />
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0" Command="{Binding ImageAction}"
+                    Width="100"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+                <TextBlock Style="{StaticResource ButtonText}"> 
+                    Download And Colorize
+                </TextBlock>
+            </Button>
 
-        <Button Grid.Row="0" Command="{Binding LaunchAsyncProp}" Width="100" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <TextBlock>Async Prop</TextBlock>
-        </Button>
+            <Button Grid.Column="1" Command="{Binding SaveAction}"
+                    Width="100"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+                <TextBlock Style="{StaticResource ButtonText}"> 
+                    Save To Local Storage
+                </TextBlock>
+            </Button>
 
-        <Border Grid.Row="1" Background="#AAFFAA">
-            <Image  x:Name="Image01" Height="100" Width="100" Source="{Binding ImageSource01}"/>
+            <Button Grid.Column="2" Command="{Binding LaunchAsyncProp}"
+                    Width="100" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+                <TextBlock Style="{StaticResource ButtonText}">
+                    Invoke Async Prop
+                </TextBlock>
+            </Button>
+        </Grid>
+
+
+        <Border Grid.Row="1" Style="{StaticResource LightBackground}">
+            <Image  x:Name="DownloadedImage"
+                    Height="100"
+                    Width="100"
+                    Source="{Binding DownloadedImage}"/>
         </Border>
 
         <Border Grid.Row="2">
-            <Image  x:Name="Image02" Height="100" Width="100" Source="{Binding ImageSource02}"/>
+            <Image  x:Name="ColorizedImage"
+                    Height="100"
+                    Width="100"
+                    Source="{Binding ColorizedImage}"/>
         </Border>
 
-        <Border Grid.Row="3" Background="#AAFFAA">
-            <Image  x:Name="Image03" Height="100" Width="100" Source="{Binding ImageSource03}"/>
+        <Border Grid.Row="3" Style="{StaticResource LightBackground}">
+            <Image  x:Name="SavedImage"
+                    Height="100"
+                    Width="100"
+                    Source="{Binding SavedImage}"/>
         </Border>
-        
+
         <Border Grid.Row="4">
-            <Image  x:Name="Image04" Height="100" Width="100" Source="{Binding ImageSource04.Result}"/>
+            <Image  x:Name="ImageDownloadAndColorizeTaskResult" 
+                    Height="100" 
+                    Width="100" 
+                    Source="{Binding ImageDownloadAndColorizeTask.Result}"/>
         </Border>
-
-
-
 
     </Grid>
 </Page>

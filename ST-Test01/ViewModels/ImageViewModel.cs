@@ -42,56 +42,53 @@ namespace ST_Test01.ViewModels
             LaunchAsyncProp = new RelayCommand(
                 () =>
                 {
-                    ImageSource04 = new NotifyTaskCompletion<string>(DownloadAdnApplyFilterAndSave());
-                    //ImageSource04.PropertyChanged += ( sender, e) => { OnPropertyChanged("ImageSource04." + e.PropertyName); } ;
+                    ImageDownloadAndColorizeTask = new NotifyTaskCompletion<string>(DownloadAdnApplyFilterAndSave());
 
                 }
              );
-
-            //ImageSource03 = "ms-appdata:///temp/images/4bf7efd093c6676777592c2ede9461b6.png";
         }
 
-        private ImageSource _imageSource01;
-        public ImageSource ImageSource01
+        private ImageSource _downloadedImage;
+        public ImageSource DownloadedImage
         {
             get
             {
-                return _imageSource01;
+                return _downloadedImage;
             }
 
             set
             {
-                _imageSource01 = value;
+                _downloadedImage = value;
                 OnPropertyChanged();
             }
         }
 
-        private ImageSource _imageSource02;
-        public ImageSource ImageSource02
+        private ImageSource _colorizedImage;
+        public ImageSource ColorizedImage
         {
             get
             {
-                return _imageSource02;
+                return _colorizedImage;
             }
 
             set
             {
-                _imageSource02 = value;
+                _colorizedImage = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _imageSource03;
-        public string ImageSource03
+        private string _savedImage;
+        public string SavedImage
         {
             get
             {
-                return _imageSource03;
+                return _savedImage;
             }
 
             set
             {
-                _imageSource03 = value;
+                _savedImage = value;
                 OnPropertyChanged();
             }
         }
@@ -104,7 +101,7 @@ namespace ST_Test01.ViewModels
 
         private async Task SaveImageAsync()
         {
-            var writeableBitmap = (WriteableBitmap)ImageSource02;
+            var writeableBitmap = (WriteableBitmap)ColorizedImage;
 
             var storageService = new StorageManagerService();
 
@@ -132,7 +129,7 @@ namespace ST_Test01.ViewModels
             stream.Dispose();
 
             var fileUri = storageService.GetUriFromFile(savefile);
-            ImageSource03 = fileUri.AbsoluteUri;
+            SavedImage = fileUri.AbsoluteUri;
         }
 
         private async Task ImageActionAsync()
@@ -156,11 +153,10 @@ namespace ST_Test01.ViewModels
             // raw image
             var bitmapImage01 = new BitmapImage();
             await bitmapImage01.SetSourceAsync(new MemoryStream(result.Item2).AsRandomAccessStream());
-            ImageSource01 = bitmapImage01;
+            DownloadedImage = bitmapImage01;
 
             // applyed colorization effect
-
-            ImageSource02 = await ProcessImage( result.Item2);
+            ColorizedImage = await ProcessImage( result.Item2);
         }
 
 
@@ -168,8 +164,9 @@ namespace ST_Test01.ViewModels
         {
             // Manipulate image color
             IBuffer inputBuffer = inputBytes.AsBuffer();
-            var bufferImageSource = new /*Lumia.Imaging.*/BufferImageSource(inputBuffer);
 
+            /*Lumia.Imaging.*/BufferImageSource bufferImageSource = null;
+            bufferImageSource = new /*Lumia.Imaging.*/BufferImageSource(inputBuffer);
 
             var output = new /*Windows.UI.Xaml.Media.Imaging.*/WriteableBitmap((int)bufferImageSource.ImageSize.Width,
                                                                                (int)bufferImageSource.ImageSize.Height);
@@ -178,9 +175,12 @@ namespace ST_Test01.ViewModels
             return output;
         }
 
-        private async Task ColorizeImageInternalAsync(/*Lumia.Imaging.*/IImageProvider inputImage, WriteableBitmap output)
+        private async Task ColorizeImageInternalAsync(/*Lumia.Imaging.*/IImageProvider inputImage, 
+                                                       WriteableBitmap output)
         {
-            using (var colorizationEffect = new ColorizationEffect(inputImage, new Windows.UI.Color() { R = 255, G = 0, B = 255 }, 1.0, 1.0)) // Create effect with the source stream
+            // Colorize image with "Purple" effect
+            using (var colorizationEffect = new ColorizationEffect(inputImage,
+                                                                   new Windows.UI.Color() { R = 255, G = 0, B = 255 }, 1.0, 1.0)) // Create effect with the source stream
             using (var renderer = new WriteableBitmapRenderer(colorizationEffect, output))
             {
                 await renderer.RenderAsync();
@@ -192,17 +192,17 @@ namespace ST_Test01.ViewModels
 
         public ICommand LaunchAsyncProp { get; set; }
 
-        private NotifyTaskCompletion<string> _imageSource04;
-        public NotifyTaskCompletion<string> ImageSource04
+        private NotifyTaskCompletion<string> _imageDownloadAndColorizeTask;
+        public NotifyTaskCompletion<string> ImageDownloadAndColorizeTask
         {
             get
             {
-                return _imageSource04;
+                return _imageDownloadAndColorizeTask;
             }
 
             set
             {
-                _imageSource04 = value;
+                _imageDownloadAndColorizeTask = value;
                 OnPropertyChanged();
             }
         }
